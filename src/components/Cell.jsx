@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Cell = () => {
+const Cell = ({type}) => {
     return (
         <div>
-            
+            cell
         </div>
     )
 }
