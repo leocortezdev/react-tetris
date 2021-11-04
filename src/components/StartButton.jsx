@@ -1,6 +1,6 @@
 import React from 'react'
 
-const StartButton = ({ callback}) => {
+const StartButton = ({ callback }) => {
     return (
         <div>
             Start Game
