@@ -4,7 +4,7 @@ import { TETRIS_BLOCKS } from './logic/tetrisBlocks';
 
 const Cell = ({type}) => {
     return (
-        <StyledCell type={type} color={TETRIS_BLOCKS[type].color}>cell</StyledCell>
+        <StyledCell type={type} color={TETRIS_BLOCKS[type].color}></StyledCell>
     )
 }
 
