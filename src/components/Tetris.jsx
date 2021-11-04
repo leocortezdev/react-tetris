@@ -10,9 +10,14 @@ import StartButton from "./StartButton";
 
 import { createStage } from "./logic/gameHelper";
 
+// style components
+
+import { StyledTetrisWrapper, StyledTetrisArea } from "./styles/StyledTetris";
+
 const Tetris = () => {
   return (
-    <div>
+    <StyledTetrisWrapper>
+        <StyledTetrisArea>
       <Stage stage={createStage()}/>
       <aside>
         <div>
@@ -22,7 +27,8 @@ const Tetris = () => {
         </div>
         <StartButton />
       </aside>
-    </div>
+      </StyledTetrisArea>
+    </StyledTetrisWrapper>
   );
 };
 
