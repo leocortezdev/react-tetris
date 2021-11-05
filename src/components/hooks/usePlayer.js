@@ -11,12 +11,21 @@ export const usePlayer = () => {
   });
 
   const rotate = (tetrisBlock, dir) => {
+    // transpose the tetris block => rows into cols
+    const rotatedTetris = tetrisBlock.map((_, index) =>
+      tetrisBlock.map((col) => col[index])
+    );
 
-  }
+    // reverse rows to full rotate tetris blocks
+    if (dir > 0) return rotatedTetris.map((row) => row.reverse());
+    return rotatedTetris.reverse();
+  };
 
   const playerRotate = (stage, dir) => {
-        
-  }
+      const copiedPlayer = JSON.parse(JSON.stringify(player));
+      copiedPlayer.tetrisBlock = rotate(copiedPlayer.tetrisBlock, dir);
+      
+  };
 
   const updatePlayerPos = ({ x, y, collided }) => {
     setPlayer((prev) => ({
