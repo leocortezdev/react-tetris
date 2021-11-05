@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 // helper functions
 
-import { createStage } from "./logic/gameHelper";
+import { createStage, collisionDetection } from "./logic/gameHelper";
 
 //components
 
@@ -24,21 +24,34 @@ const Tetris = () => {
   const [gameOver, setGameOver] = useState(false);
 
   const [player, updatePlayerPos, resetPlayer] = usePlayer();
-  const [stage, setStage] = useStage(player);
+  const [stage, setStage] = useStage(player, resetPlayer);
 
   console.log("re-render");
 
   const movePlayer = (dir) => {
-    updatePlayerPos({x: dir, y: 0});
+    if (!collisionDetection(player, stage, { x: dir, y: 0 })) {
+      updatePlayerPos({ x: dir, y: 0 });
+    }
   };
 
   const startGame = () => {
     setStage(createStage());
     resetPlayer();
+    setGameOver(false);
   };
 
   const drop = () => {
-    updatePlayerPos({ x: 0, y: 1, collided: false})
+    if(!collisionDetection(player, stage, { x: 0, y: 1 })) {
+      updatePlayerPos({ x: 0, y: 1, collided: false });
+    } else {
+      // update on game over
+      if(player.pos.y < 1) {
+        console.log("game over")
+        setGameOver(true);
+        setDropTime(null);
+      }
+      updatePlayerPos({ x: 0, y: 0, collided: true })
+    }
   };
 
   const dropPlayer = () => {
@@ -71,7 +84,7 @@ const Tetris = () => {
               <Display text="Level:" />
             </div>
           )}
-          <StartButton onClick={startGame}/>
+          <StartButton callback={startGame} />
         </aside>
       </StyledTetrisArea>
     </StyledTetrisWrapper>

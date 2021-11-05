@@ -1,14 +1,22 @@
 import { useState, useCallback } from "react";
 
-import { randomTetrisBlocks } from "../logic/tetrisBlocks";
+import { randomTetrisBlocks, TETRIS_BLOCKS } from "../logic/tetrisBlocks";
 import { STAGE_WIDTH } from "./../logic/gameHelper";
 
 export const usePlayer = () => {
   const [player, setPlayer] = useState({
     pos: { x: 0, y: 0 },
-    tetrisBlock: randomTetrisBlocks().shape,
+    tetrisBlock: TETRIS_BLOCKS[0].shape,
     collided: false,
   });
+
+  const rotate = (tetrisBlock, dir) => {
+
+  }
+
+  const playerRotate = (stage, dir) => {
+        
+  }
 
   const updatePlayerPos = ({ x, y, collided }) => {
     setPlayer((prev) => ({
