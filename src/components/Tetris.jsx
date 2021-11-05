@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 
+// helper functions
+
+import { createStage } from "./logic/gameHelper";
+
 //components
 
 import Stage from "./Stage";
@@ -24,13 +28,35 @@ const Tetris = () => {
 
   console.log("re-render");
 
+  const movePlayer = (dir) => {};
+
+  const startGame = () => {};
+
+  const drop = () => {};
+
+  const dropPlayer = () => {
+    drop();
+  };
+
+  const move = ({ key }) => {
+    if (!gameOver) {
+      if (key === "ArrowLeft" || key === "a") {
+        movePlayer(-1);
+      } else if (key === "ArrowRight" || key === "d") {
+        movePlayer(1);
+      } else if (key === "ArrowDown" || key === "s") {
+        dropPlayer();
+      }
+    }
+  };
+
   return (
-    <StyledTetrisWrapper>
+    <StyledTetrisWrapper role="button" tabIndex="0" onKeyDown={(e) => move(e)}>
       <StyledTetrisArea>
         <Stage stage={stage} />
         <aside>
           {gameOver ? (
-            <Display gameOver={gameOver} text='Game Over' />
+            <Display gameOver={gameOver} text="Game Over" />
           ) : (
             <div>
               <Display text="Score:" />
