@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 
 import { randomTetrisBlocks, TETRIS_BLOCKS } from "../logic/tetrisBlocks";
-import { STAGE_WIDTH } from "./../logic/gameHelper";
+import { collisionDetection, STAGE_WIDTH } from "./../logic/gameHelper";
 
 export const usePlayer = () => {
   const [player, setPlayer] = useState({
@@ -22,9 +22,24 @@ export const usePlayer = () => {
   };
 
   const playerRotate = (stage, dir) => {
-      const copiedPlayer = JSON.parse(JSON.stringify(player));
-      copiedPlayer.tetrisBlock = rotate(copiedPlayer.tetrisBlock, dir);
-      
+    const copiedPlayer = JSON.parse(JSON.stringify(player));
+    copiedPlayer.tetrisBlock = rotate(copiedPlayer.tetrisBlock, dir);
+
+    // rotation collision detection
+    const posX = copiedPlayer.pos.x;
+
+    while (collisionDetection(copiedPlayer, stage, { x: 0, y: 0 })) {
+      let offset = 1;
+      copiedPlayer.pos.x += offset;
+      offset = -(offset + (offset > 0 ? 1 : -1));
+      if (offset > copiedPlayer.tetrisBlock[0].length) {
+        rotate(copiedPlayer.tetrisBlock, -dir);
+        copiedPlayer.pos.x = posX;
+        return;
+      }
+    }
+
+    setPlayer(copiedPlayer);
   };
 
   const updatePlayerPos = ({ x, y, collided }) => {
@@ -43,5 +58,5 @@ export const usePlayer = () => {
     });
   }, []);
 
-  return [player, updatePlayerPos, resetPlayer];
+  return [player, updatePlayerPos, resetPlayer, playerRotate];
 };

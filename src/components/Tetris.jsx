@@ -23,7 +23,7 @@ const Tetris = () => {
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
 
-  const [player, updatePlayerPos, resetPlayer] = usePlayer();
+  const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
   const [stage, setStage] = useStage(player, resetPlayer);
 
   console.log("re-render");
@@ -41,16 +41,16 @@ const Tetris = () => {
   };
 
   const drop = () => {
-    if(!collisionDetection(player, stage, { x: 0, y: 1 })) {
+    if (!collisionDetection(player, stage, { x: 0, y: 1 })) {
       updatePlayerPos({ x: 0, y: 1, collided: false });
     } else {
       // update on game over
-      if(player.pos.y < 1) {
-        console.log("game over")
+      if (player.pos.y < 1) {
+        console.log("game over");
         setGameOver(true);
         setDropTime(null);
       }
-      updatePlayerPos({ x: 0, y: 0, collided: true })
+      updatePlayerPos({ x: 0, y: 0, collided: true });
     }
   };
 
@@ -66,6 +66,10 @@ const Tetris = () => {
         movePlayer(1);
       } else if (key === "ArrowDown" || key === "s") {
         dropPlayer();
+      } else if (key === "q") {
+        playerRotate(stage, -1);
+      } else if (key === "e") {
+        playerRotate(stage, 1);
       }
     }
   };
