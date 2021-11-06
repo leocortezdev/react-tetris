@@ -3,35 +3,49 @@ import { createStage } from "../logic/gameHelper";
 
 export const useStage = (player, resetPlayer) => {
   const [stage, setStage] = useState(createStage());
+  const [rowsCleared, setRowsCleared] = useState(0);
 
   useEffect(() => {
     const updateStage = (prevStage) => {
+      setRowsCleared(0);
+
+      const sweepRows = (newStage) =>
+        newStage.reduce((acc, row) => {
+          if (row.findIndex((cell) => cell[0] === 0) === -1) {
+            setRowsCleared((prev) => prev + 1);
+            acc.unshift(new Array(newStage[0].length).fill([0, "clear"]));
+          }
+          acc.push(row);
+          return acc;
+        }, []);
       // clean the stage
+
       const newStage = prevStage.map((row) =>
         row.map((cell) => (cell[1] === "clear" ? [0, "clear"] : cell))
       );
-        // after draw the tetrisBlock 
+      // after draw the tetrisBlock
 
-        player.tetrisBlock.forEach((row, y) => {
-            row.forEach((value, x) => {
-                if(value !== 0) {
-                    newStage[y + player.pos.y][x + player.pos.x] = [
-                        value,
-                        `${player.collided ? 'merged' : 'clear'}`
-                    ]
-                }
-            })
-        })
-        // check for collision
-        if(player.collided) {
-            resetPlayer();
-        }
+      player.tetrisBlock.forEach((row, y) => {
+        row.forEach((value, x) => {
+          if (value !== 0) {
+            newStage[y + player.pos.y][x + player.pos.x] = [
+              value,
+              `${player.collided ? "merged" : "clear"}`,
+            ];
+          }
+        });
+      });
+      // check for collision
+      if (player.collided) {
+        resetPlayer();
+        return sweepRows(newStage);
+      }
 
-        return newStage
+      return newStage;
     };
 
     setStage((prev) => updateStage(prev));
   }, [player, resetPlayer]);
 
-  return [stage, setStage];
+  return [stage, setStage, rowsCleared];
 };
