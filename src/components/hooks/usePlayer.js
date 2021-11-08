@@ -3,6 +3,7 @@ import { useState, useCallback } from "react";
 import { randomTetrisBlocks, TETRIS_BLOCKS } from "../logic/tetrisBlocks";
 import { collisionDetection, STAGE_WIDTH } from "./../logic/gameHelper";
 
+
 export const usePlayer = () => {
   const [player, setPlayer] = useState({
     pos: { x: 0, y: 0 },
