@@ -1,13 +1,14 @@
-import React from 'react'
-import Tetris from './components/Tetris'
+import React from "react";
+import Tetris from "./components/Tetris";
+import Background from "./components/Background";
 
 const App = () => {
   return (
-    <div>
+    <>
+      <Background />
       <Tetris />
-    </div>
-  )
-}
+    </>
+  );
+};
 
-export default App
-
+export default App;
