@@ -12,8 +12,8 @@ export const StyledNextTetrisBlock = styled.div`
   background-color: rgba(22, 22, 22, 1);
   display: grid;
   gap: 1px;
-    grid-template-columns: repeat(${props => props.width}, 1fr); 
-    grid-template-rows: repeat(${props => props.height}, 1fr);
+    grid-template-columns: repeat(${({width}) => width}, 1fr); 
+    grid-template-rows: repeat(${({height}) => height}, 1fr);
   }
 `;
 

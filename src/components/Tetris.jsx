@@ -14,20 +14,23 @@ import StartButton from "./StartButton";
 import { useInterval } from "./hooks/useInterval";
 import { usePlayer } from "./hooks/usePlayer";
 import { useStage } from "./hooks/useStage";
-import { useGameStatus} from './hooks/useGameStatus';
+import { useGameStatus } from "./hooks/useGameStatus";
 
 // style components
 
 import { StyledTetrisWrapper, StyledTetrisArea } from "./styles/StyledTetris";
+import NextTetrisBlock from "./NextTetrisBlock";
 
 const Tetris = () => {
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
 
-  const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
+  const [player, updatePlayerPos, resetPlayer, playerRotate, nextBlock] =
+    usePlayer();
 
   const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
-  const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(rowsCleared);
+  const [score, setScore, rows, setRows, level, setLevel] =
+    useGameStatus(rowsCleared);
 
   console.log("re-render");
 
@@ -43,14 +46,14 @@ const Tetris = () => {
     resetPlayer();
     setScore(0);
     setLevel(0);
-    setRows(0)
+    setRows(0);
     setGameOver(false);
   };
 
   const drop = () => {
     // calculate level when player rows > 10
     if (rows > (level + 1) * 10) {
-      setLevel(prev => prev + 1);
+      setLevel((prev) => prev + 1);
       // Also increase speed
       setDropTime(1000 / (level + 1) + 200);
     }
@@ -72,7 +75,7 @@ const Tetris = () => {
     if (!gameOver) {
       if (key === "ArrowDown" || key === "s") {
         //check to see interval is on
-        console.log('interval is on');
+        console.log("interval is on");
         setDropTime(1000);
       }
     }
@@ -80,7 +83,7 @@ const Tetris = () => {
 
   const dropPlayer = () => {
     //check to see if interval is off
-    console.log('interval is off');
+    console.log("interval is off");
     setDropTime(null);
     drop();
   };
@@ -113,6 +116,11 @@ const Tetris = () => {
       onKeyUp={keyUp}
     >
       <StyledTetrisArea>
+        <aside className="next-tetrimino">
+          <>
+            <NextTetrisBlock tetrimino={nextBlock} />
+          </>
+        </aside>
         <Stage stage={stage} />
         <aside>
           {gameOver ? (

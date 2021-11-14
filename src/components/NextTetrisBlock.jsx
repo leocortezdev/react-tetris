@@ -1,14 +1,15 @@
 import React from "react";
 
-import Cell from "../Cell/Cell";
+import Cell from "./Cell";
 
 import {
+
   StyledNextTetrisBlock,
   StyledTitle,
   StyledWrapper
 } from "./styles/StyledNextTetrisBlock";
 
-const NextTetrimino = ({ tetrimino }) => (
+const NextTetrisBlock = ({ tetrimino }) => (
   <StyledWrapper>
     <StyledTitle>Next</StyledTitle>
     <StyledNextTetrisBlock width={tetrimino[0].length} height={tetrimino.length}>
@@ -21,4 +22,4 @@ const NextTetrimino = ({ tetrimino }) => (
   </StyledWrapper>
 );
 
-export default NextTetrimino;
+export default NextTetrisBlock;

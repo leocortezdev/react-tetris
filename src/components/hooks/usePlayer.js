@@ -4,7 +4,7 @@ import { randomTetrisBlocks, TETRIS_BLOCKS } from "../logic/tetrisBlocks";
 import { collisionDetection, STAGE_WIDTH } from "./../logic/gameHelper";
 
 const startingPlayer = (tetrisBlock) => ({
-  pos: { x: 0, y: 0 },
+  pos: { x: STAGE_WIDTH / 2 - 2, y: 0 },
   tetrisBlock,
   collided: false,
 });
@@ -63,5 +63,5 @@ export const usePlayer = () => {
     setNextBlock(randomTetrisBlocks().shape);
   }, [nextBlock]);
 
-  return [player, updatePlayerPos, resetPlayer, playerRotate];
+  return [player, updatePlayerPos, resetPlayer, playerRotate, nextBlock];
 };
