@@ -3,15 +3,17 @@ import { useState, useCallback } from "react";
 import { randomTetrisBlocks, TETRIS_BLOCKS } from "../logic/tetrisBlocks";
 import { collisionDetection, STAGE_WIDTH } from "./../logic/gameHelper";
 
+const startingPlayer = (tetrisBlock) => ({
+  pos: { x: 0, y: 0 },
+  tetrisBlock,
+  collided: false,
+});
 
 export const usePlayer = () => {
   const tetrisBlock = TETRIS_BLOCKS[0].shape;
 
-  const [player, setPlayer] = useState({
-    pos: { x: 0, y: 0 },
-    tetrisBlock,
-    collided: false,
-  });
+  const [player, setPlayer] = useState(startingPlayer(tetrisBlock));
+  const [nextBlock, setNextBlock] = useState(tetrisBlock);
 
   const rotate = (tetrisBlock, dir) => {
     // transpose the tetris block => rows into cols
@@ -59,7 +61,7 @@ export const usePlayer = () => {
       tetrisBlock: randomTetrisBlocks().shape,
       collided: false,
     });
-  }, []);
+  }, [nextTetrisBlock]);
 
   return [player, updatePlayerPos, resetPlayer, playerRotate];
 };
