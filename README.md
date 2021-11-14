@@ -7,4 +7,5 @@
 ## Planned to add
 
 - Back end
+- Multiplayer component
 - 
