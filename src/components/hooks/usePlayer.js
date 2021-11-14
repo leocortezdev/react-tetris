@@ -56,12 +56,12 @@ export const usePlayer = () => {
   };
 
   const resetPlayer = useCallback(() => {
-    setPlayer({
-      pos: { x: STAGE_WIDTH / 2 - 2, y: 0 },
-      tetrisBlock: randomTetrisBlocks().shape,
-      collided: false,
-    });
-  }, [nextTetrisBlock]);
+    // To initiate state we start from scratch
+    const newTetrisBlock = nextBlock.length < 2 ? randomTetrisBlocks().shape : nextBlock;
+
+    setPlayer(startingPlayer(newTetrisBlock));
+    setNextBlock(randomTetrisBlocks().shape);
+  }, [nextBlock]);
 
   return [player, updatePlayerPos, resetPlayer, playerRotate];
 };
