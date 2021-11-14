@@ -5,9 +5,11 @@ import { collisionDetection, STAGE_WIDTH } from "./../logic/gameHelper";
 
 
 export const usePlayer = () => {
+  const tetrisBlock = TETRIS_BLOCKS[0].shape;
+
   const [player, setPlayer] = useState({
     pos: { x: 0, y: 0 },
-    tetrisBlock: TETRIS_BLOCKS[0].shape,
+    tetrisBlock,
     collided: false,
   });
 
