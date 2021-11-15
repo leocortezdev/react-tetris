@@ -9,12 +9,12 @@ import {
   StyledWrapper
 } from "./styles/StyledNextTetrisBlock";
 
-const NextTetrisBlock = ({ tetrimino }) => (
+const NextTetrisBlock = ({ tetrisBlock }) => (
   <StyledWrapper>
     <StyledTitle>Next</StyledTitle>
-    <StyledNextTetrisBlock width={tetrimino[0].length} height={tetrimino.length}>
-      <div className="tetromino">
-        {tetrimino.map(row =>
+    <StyledNextTetrisBlock width={tetrisBlock[0].length} height={tetrisBlock.length}>
+      <div className="tetrisBlock">
+        {tetrisBlock.map(row =>
           row.map((cell, x) => <Cell key={x} type={cell} />)
         )}
       </div>

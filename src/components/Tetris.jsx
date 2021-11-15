@@ -116,9 +116,9 @@ const Tetris = () => {
       onKeyUp={keyUp}
     >
       <StyledTetrisArea>
-        <aside className="next-tetrimino">
+        <aside className="next-tetrisBlock">
           <>
-            <NextTetrisBlock tetrimino={nextBlock} />
+            <NextTetrisBlock tetrisBlock={nextBlock} />
           </>
         </aside>
         <Stage stage={stage} />

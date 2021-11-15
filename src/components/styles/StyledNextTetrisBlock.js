@@ -7,7 +7,7 @@ export const StyledNextTetrisBlock = styled.div`
   gap: 1px;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr); */
-  .tetromino {
+  .tetrisBlock {
   grid-area: 2 / 2 / 3 / 3;
   background-color: rgba(22, 22, 22, 1);
   display: grid;
