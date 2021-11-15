@@ -121,7 +121,7 @@ const Tetris = () => {
             <NextTetrisBlock tetrisBlock={nextBlock} />
           </>
         </aside>
-        <Stage stage={stage} />
+        <Stage stage={stage} className="stage"/>
         <aside>
           {gameOver ? (
             <Display gameOver={gameOver} text="Game Over" />

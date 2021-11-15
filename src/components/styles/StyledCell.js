@@ -8,4 +8,10 @@ export const StyledCell = styled.div`
   border-right-color: rgba(${({color}) => color}, 1);
   border-top-color: rgba(${({color}) => color}, 1);
   border-left-color: rgba(${({color}) => color}, 0.3);
+
+  &::after {
+    padding-bottom: 100%;
+    content: "";
+    display: block;
+  }
 `;

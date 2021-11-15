@@ -1,12 +1,14 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 // image import
 
-
 export const StyledTetrisWrapper = styled.div`
-    height: 100%;
-    width: 100%;
-`
+  height: 100vh;
+  width: 100vw;
+  max-width: 850px;
+  outline: none;
+  font-size: ${(props) => 1 - props.nPlayers * 0.1}rem;
+`;
 
 export const StyledTetrisArea = styled.div`
   position: relative;
