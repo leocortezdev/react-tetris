@@ -1,12 +1,12 @@
 import React from "react";
-import Tetris from "./components/Tetris";
+import TetrisController from "./components/TetrisController";
 import Background from "./components/Background";
 
 const App = () => {
   return (
     <>
       <Background />
-      <Tetris />
+      <TetrisController />
     </>
   );
 };

@@ -7,7 +7,7 @@ export const StyledTetrisWrapper = styled.div`
   width: 100vw;
   max-width: 850px;
   outline: none;
-  font-size: ${(props) => 1 - props.nPlayers * 0.1}rem;
+  font-size: ${({nPlayers}) => 1 - nPlayers * 0.1}rem;
 `;
 
 export const StyledTetrisArea = styled.div`
@@ -22,7 +22,8 @@ export const StyledTetrisArea = styled.div`
     width: 40%;
   }
   .next-tetrisBlock {
-    width: 30%;
+    width: 10vw;
+    height: 10vh;
     padding-right: 1.25rem;
     > * {
       margin-bottom: 1rem;
