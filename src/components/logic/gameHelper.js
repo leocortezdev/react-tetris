@@ -8,6 +8,7 @@ export const createStage = () => {
 };
 
 export const collisionDetection = (player, stage, { x: moveX, y: moveY }) => {
+  
   for (let y = 0; y < player.tetrisBlock.length; y++) {
     for (let x = 0; x < player.tetrisBlock[y].length; x++) {
       // check to see if its a tetris block cell

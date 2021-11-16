@@ -9,6 +9,7 @@ import { createStage, collisionDetection } from "./logic/gameHelper";
 import Stage from "./Stage";
 import Display from "./Display";
 import StartButton from "./StartButton";
+import HighScore from "./HighScore";
 
 // Custom Hooks
 import { useInterval } from "./hooks/useInterval";
@@ -33,6 +34,11 @@ const Tetris = () => {
     useGameStatus(rowsCleared);
 
   console.log("re-render");
+
+  const fakeHighScores = [
+    { name: "leo", score: 2223 },
+    { name: "leo", score: 223323 },
+  ];
 
   const movePlayer = (dir) => {
     if (!collisionDetection(player, stage, { x: dir, y: 0 })) {
@@ -119,9 +125,10 @@ const Tetris = () => {
         <aside className="next-tetrisBlock">
           <>
             <NextTetrisBlock tetrisBlock={nextBlock} />
+              <HighScore highScores={fakeHighScores}/>
           </>
         </aside>
-        <Stage stage={stage} className="stage"/>
+        <Stage stage={stage} className="stage" />
         <aside>
           {gameOver ? (
             <Display gameOver={gameOver} text="Game Over" />
