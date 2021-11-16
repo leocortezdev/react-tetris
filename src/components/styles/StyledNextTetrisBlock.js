@@ -8,17 +8,17 @@ export const StyledNextTetrisBlock = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr); */
   .tetrisBlock {
-  grid-area: 2 / 2 / 3 / 3;
-  background-color: rgba(22, 22, 22, 1);
-  display: grid;
-  gap: 1px;
-    grid-template-columns: repeat(${({width}) => width}, 1fr); 
-    grid-template-rows: repeat(${({height}) => height}, 1fr);
+    grid-area: 2 / 2 / 3 / 3;
+    background-color: rgba(22, 22, 22, 1);
+    display: grid;
+    gap: 1px;
+    grid-template-columns: repeat(${({ width }) => width}, 1fr);
+    grid-template-rows: repeat(${({ height }) => height}, 1fr);
   }
 `;
 
 export const StyledTitle = styled.h4`
-  margin: 0 0 5rem 0;
+  margin: 0 0 1.5rem 0;
   color: #ddd;
   font-family: Pixel, monospace, "Courier New", Courier;
 `;
