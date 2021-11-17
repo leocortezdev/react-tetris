@@ -32,7 +32,7 @@ const Tetris = () => {
   const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
   const [score, setScore, rows, setRows, level, setLevel] =
     useGameStatus(rowsCleared);
-
+  const username = "LeoC";
   console.log("re-render");
 
   const fakeHighScores = [
@@ -125,19 +125,23 @@ const Tetris = () => {
         <aside className="next-tetrisBlock">
           <>
             <NextTetrisBlock tetrisBlock={nextBlock} />
-              <HighScore highScores={fakeHighScores}/>
+            <HighScore highScores={fakeHighScores} />
           </>
         </aside>
         <Stage stage={stage} className="stage" />
         <aside className="information">
           {gameOver ? (
-            <Display gameOver={gameOver} text="Game Over" />
+            <>
+              <Display text={`User: ${username}`} />
+              <Display gameOver={gameOver} text="Game Over" />
+            </>
           ) : (
-            <div>
+            <>
+              <Display text={`User: ${username}`} />
               <Display text={`Score: ${score}`} />
               <Display text={`Row: ${rows}`} />
               <Display text={`Level: ${level}`} />
-            </div>
+            </>
           )}
           <StartButton callback={startGame} />
         </aside>
