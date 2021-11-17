@@ -58,7 +58,7 @@ export const TETRIS_BLOCKS = {
   },
 };
 
-export const randomTetrisBlocks = () => {
+export const randomTetrisBlock = () => {
   const blocks = "IJLOSTZ";
   const randomBlock = blocks[Math.floor(Math.random() * blocks.length)];
   return TETRIS_BLOCKS[randomBlock];

@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-import { randomTetrisBlocks, TETRIS_BLOCKS } from "../logic/tetrisBlocks";
+import { randomTetrisBlock, TETRIS_BLOCKS } from "../logic/tetrisBlocks";
 import { collisionDetection, STAGE_WIDTH } from "./../logic/gameHelper";
 
 const startingPlayer = (tetrisBlock) => ({
@@ -57,10 +57,10 @@ export const usePlayer = () => {
 
   const resetPlayer = useCallback(() => {
     // To initiate state we start from scratch
-    const newTetrisBlock = nextBlock.length < 2 ? randomTetrisBlocks().shape : nextBlock;
+    const newTetrisBlock = nextBlock.length < 2 ? randomTetrisBlock().shape : nextBlock;
 
     setPlayer(startingPlayer(newTetrisBlock));
-    setNextBlock(randomTetrisBlocks().shape);
+    setNextBlock(randomTetrisBlock().shape);
   }, [nextBlock]);
 
   return [player, updatePlayerPos, resetPlayer, playerRotate, nextBlock];
