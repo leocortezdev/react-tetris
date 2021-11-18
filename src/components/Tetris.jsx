@@ -51,7 +51,7 @@ const Tetris = () => {
     setStage(createStage());
     resetPlayer();
     setScore(0);
-    setLevel(0);
+    setLevel(1);
     setRows(0);
     setGameOver(false);
   };

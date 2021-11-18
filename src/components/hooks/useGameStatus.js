@@ -6,11 +6,10 @@ export const useGameStatus = rowsCleared => {
   const [score, setScore] = useState(0);
   const [rows, setRows] = useState(0);
   const [level, setLevel] = useState(1);
-
+  const scorePoints = [40, 100, 300, 1200];
   
 
   const calcScore = useCallback(() => {
-    const scorePoints = [40, 100, 300, 1200];
 
     if (rowsCleared > 0) {
       setScore(
@@ -19,7 +18,7 @@ export const useGameStatus = rowsCleared => {
       );
       setRows(prev => prev + rowsCleared)
     }
-  }, [level, rowsCleared]);
+  }, [level, rowsCleared, scorePoints]);
 
   useEffect(() => {
     calcScore();
