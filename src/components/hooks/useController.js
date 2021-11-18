@@ -5,6 +5,7 @@ import { EventHandler } from "./logic/eventHandler";
 
 
 export const useController = (TetrisController) => {
+    
   const [players, setPlayers] = useState(new Map());
   const [highscores, setHighScores] = useState([]);
   const [startGame, setStartGame] = useState(true);
@@ -42,5 +43,5 @@ export const useController = (TetrisController) => {
     setPlayers(prev => prev.delete(id));
   };
 
-  return [highscores, startGame, updateTetrisState, setHighscore, removePlayer, setStartGame];
+  return [highscores, startGame, updateTetrisState, setHighscore, removePlayer, setStartGame, players];
 };
