@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // helper functions
 
@@ -22,23 +22,62 @@ import { useGameStatus } from "./hooks/useGameStatus";
 import { StyledTetrisWrapper, StyledTetrisArea } from "./styles/StyledTetris";
 import NextTetrisBlock from "./NextTetrisBlock";
 
-const Tetris = () => {
+const Tetris = ({ key, events, isLocalPlayer, gameState, highscores, handleHighscore, nPlayers }) => {
+  const baseSpeed = 700;
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
+  const [gameSpeed, setGameSpeed] = useState(baseSpeed);
+  const [showModal, setShowModal] = useState(false);
+  const [speedDrop, setSpeedDrop] = useState(false);
 
   const [player, updatePlayerPos, resetPlayer, playerRotate, nextBlock] =
     usePlayer();
 
   const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
-  const [score, setScore, rows, setRows, level, setLevel] =
-    useGameStatus(rowsCleared);
-  const username = "LeoC";
+  const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(rowsCleared);
+  const username = "null";
   console.log("re-render");
 
-  const fakeHighScores = [
+  /*const fakeHighScores = [
     { name: "leo", score: 2223 },
     { name: "leo", score: 223323 },
   ];
+  */
+
+
+  useEffect(() => {
+    if (!isLocalPlayer) {
+      const stage = gameState.stage;
+      if (stage) setStage(stage);
+    }
+  }, [gameState.stage, isLocalPlayer, setStage]);
+
+  useEffect(() => {
+    if (!isLocalPlayer) {
+      if (gameState.gameOver !== undefined) setGameOver(gameState.gameOver);
+      if (gameState.score !== undefined) setScore(gameState.score);
+      if (gameState.rows !== undefined) setRows(gameState.rows);
+      if (gameState.level !== undefined) setLevel(gameState.level);
+    }
+  }, [
+    gameState,
+    isLocalPlayer,
+    setScore,
+    setRows,
+    setLevel
+  ]);
+
+  useEffect(() => {
+    const serializeGameState = () => {
+      return { stage, gameOver, score, rows, level };
+    }
+    // for every player that joins the session
+    // broadcast our local state to all clients
+    if (isLocalPlayer && nPlayers > 1) {
+      const state = serializeGameState();
+      events.emit("state", state);
+    }
+  }, [nPlayers, events, isLocalPlayer, stage, gameOver, score, rows, level]);
 
   const movePlayer = (dir) => {
     if (!collisionDetection(player, stage, { x: dir, y: 0 })) {
@@ -46,9 +85,39 @@ const Tetris = () => {
     }
   };
 
+  
+  useEffect(() => {
+    events.emit("score", score);
+  }, [events, score]);
+
+  useEffect(() => {
+    events.emit("rows", rows);
+  }, [events, rows]);
+
+  useEffect(() => {
+    events.emit("level", level);
+  }, [events, level]);
+
+  useEffect(() => {
+    events.emit("gameOver", gameOver);
+  }, [events, gameOver]);
+
+  useEffect(() => {
+    events.emit("player", player);
+  }, [events, player]);
+
+  useEffect(() => {
+    events.emit("stage", stage);
+  }, [events, stage]);
+
+  useInterval(() => {
+    drop();
+  }, dropTime);
+
   const startGame = () => {
-    setDropTime(1000);
     setStage(createStage());
+    setGameSpeed(isLocalPlayer ? baseSpeed : null);
+    setDropTime(baseSpeed);
     resetPlayer();
     setScore(0);
     setLevel(1);
@@ -74,6 +143,13 @@ const Tetris = () => {
         setDropTime(null);
       }
       updatePlayerPos({ x: 0, y: 0, collided: true });
+
+      if (
+        highscores.length < 5 ||
+        highscores.slice(0, 5).find(highscore => score > highscore.score)
+      ) {
+        setShowModal(true); // show highscore submit modal
+      }
     }
   };
 
@@ -82,16 +158,29 @@ const Tetris = () => {
       if (key === "ArrowDown" || key === "s") {
         //check to see interval is on
         console.log("interval is on");
+        setSpeedDrop(false);
         setDropTime(1000);
       }
     }
   };
+
+  
 
   const dropPlayer = () => {
     //check to see if interval is off
     console.log("interval is off");
     setDropTime(null);
     drop();
+  };
+
+  const onSubmitHighscore = name => {
+    setShowModal(false);
+    const highscoreItem = { name, score };
+    const newHighscoreArr = [...highscores, highscoreItem];
+    newHighscoreArr.sort((a, b) => b.score - a.score);
+    if (newHighscoreArr.length > 5) newHighscoreArr.pop();
+
+    handleHighscore(newHighscoreArr);
   };
 
   const move = ({ key }) => {
@@ -114,8 +203,11 @@ const Tetris = () => {
     drop();
   }, dropTime);
 
+  
+
   return (
     <StyledTetrisWrapper
+      key={key}
       role="button"
       tabIndex="0"
       onKeyDown={(e) => move(e)}
@@ -125,11 +217,13 @@ const Tetris = () => {
         <aside className="next-tetrisBlock">
           <>
             <NextTetrisBlock tetrisBlock={nextBlock} />
-            <HighScore highScores={fakeHighScores} />
+            <HighScore highScores={highscores} />
           </>
         </aside>
         <Stage stage={stage} className="stage" />
+        {showModal ? <HighScore submitName={onSubmitHighscore} /> : null}
         <aside className="information">
+
           {gameOver ? (
             <>
               <Display text={`User: ${username}`} />

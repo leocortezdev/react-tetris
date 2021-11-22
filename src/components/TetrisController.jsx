@@ -11,4 +11,6 @@ const TetrisController = () => {
   );
 };
 
-export default TetrisController;
+TetrisController();
+
+//export default TetrisController;

@@ -1,14 +1,16 @@
 import{ useState, useEffect, useCallback } from "react";
 
-import Connections from "./logic/connections";
-import { EventHandler } from "./logic/eventHandler";
+import Connections from "../logic/connections";
+import {EventHandler}  from "../logic/eventHandler";
 
 
 export const useController = (TetrisController) => {
-    
+
   const [players, setPlayers] = useState(new Map());
   const [highscores, setHighScores] = useState([]);
   const [startGame, setStartGame] = useState(true);
+
+  //const testPlayers = {};
 
   const createPlayer = useCallback((playerId = "localPlayer", gameState = {}) => {
     const events = new EventHandler();
@@ -26,7 +28,7 @@ export const useController = (TetrisController) => {
     return connectionManager;
   }, [createPlayer, TetrisController]);
 
-  const setHighscore = newHighscore => setHighScores({ highscores: newHighscore });
+  const setHighscore = newHighscore => setHighScores([...highscores, newHighscore]);
 
   const updateTetrisState = (id, newState) => {
     const player = players.get(id);

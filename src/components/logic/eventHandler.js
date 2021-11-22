@@ -1,4 +1,4 @@
-export class EventHandler {
+class EventHandler {
     constructor() {
       this.listeners = new Set();
     }
@@ -18,4 +18,5 @@ export class EventHandler {
       });
     }
   }
-  
+
+export default EventHandler;
